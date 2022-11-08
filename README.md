@@ -12,3 +12,12 @@ The idea is to speed up information gathered from news websides. You are going t
 
 
 
+# Resources
+
+[Chrome Driver](https://chromedriver.chromium.org/downloads)
+
+[Selenium](https://selenium-python.readthedocs.io)
+
+
+
+
