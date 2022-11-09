@@ -18,35 +18,40 @@ def FoxNewsPrint():
     ListOfThings = FoxNewsScrape()
 
     for i in ListOfThings:
-        print(f"Topic: {i.topic}\nTitle: {i.title}\nLink: {i.link}\n")
+        print(f"Topic: {i.topic}\n{i.title}\nLink: {i.link}\n")
+def FoxNewsHeadline():
+    Headline = FoxNewsArticle
+    Headline.topic = "HEADLINE"
+    Headline.title = driver.find_element(By.XPATH,
+                                      "//*[@id='wrapper']/div/div[2]/div[1]/main/div/div/div[1]/div/article/div[2]/header/h2/a").get_attribute(
+        "textContent")  # HeadLine Article
+    Headline.link = driver.find_element(By.XPATH,
+                                     "//*[@id='wrapper']/div/div[2]/div[1]/main/div/div/div[1]/div/article/div[2]/header/h2/a").get_attribute(
+        "href")  # HeadLine Link
+
+    return Headline
 def FoxNewsScrape():
 
     Articles = []
+    Articles.append(FoxNewsHeadline())
+
     ExclusiveClipsSection = driver.find_elements(By.XPATH, "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div[3]/section/div/article")
 
     for i in range(1, len(ExclusiveClipsSection) + 1):
 
-        Entry = FoxNewsArticle()
-        Entry.topic = driver.find_element(By.XPATH, "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div[3]/section/div/article[{}]/div[2]/header/div/span/a".format(i)).get_attribute("textContent")
-        Entry.title = driver.find_element(By.XPATH, "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div[3]/section/div/article[{}]/div[2]/header/h2/a".format(i)).get_attribute("textContent")
-        Entry.link = driver.find_element(By.XPATH, "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div[3]/section/div/article[{}]/div[2]/header/h2/a".format(i)).get_attribute("href")
+        ExclusiveClips = FoxNewsArticle()
+        ExclusiveClips.topic = driver.find_element(By.XPATH, "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div[3]/section/div/article[{}]/div[2]/header/div/span/a".format(i)).get_attribute("textContent")
+        ExclusiveClips.title = driver.find_element(By.XPATH, "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div[3]/section/div/article[{}]/div[2]/header/h2/a".format(i)).get_attribute("textContent")
+        ExclusiveClips.link = driver.find_element(By.XPATH, "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div[3]/section/div/article[{}]/div[2]/header/h2/a".format(i)).get_attribute("href")
 
-        Articles.append(Entry)
+        Articles.append(ExclusiveClips)
 
 
 
     return Articles
 
-#FoxNewsPrint()
 
 
-articlesList = driver.find_elements(By.TAG_NAME, "article")
-
-
-for i in range(len(articlesList)):
-    print(articlesList[i].find_element(By.XPATH, "/div[2]/header/div/span/a".format(i)).get_attribute("textContent"))
-
-
-
+FoxNewsPrint()
 driver.close()
 
