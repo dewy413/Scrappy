@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
 options = Options()
-options.add_argument("headless")  # Comment this out if you want to see it open the browser.
+options.add_argument("headless")
 options.add_argument('--disable-gpu')
 driver = webdriver.Chrome(options=options)
 driver.get("https://www.foxnews.com/")
