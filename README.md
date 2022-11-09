@@ -18,6 +18,7 @@ The idea is to speed up information gathered from news websides. You are going t
 
 [Selenium](https://selenium-python.readthedocs.io)
 
+[Understanding XPath](https://www.guru99.com/xpath-selenium.html)
 
 
 
