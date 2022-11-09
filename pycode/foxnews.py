@@ -14,15 +14,19 @@ class FoxNewsArticle:
     topic = ""
     title = ""
     link = ""
+def FoxNewsPrint():
+    ListOfThings = FoxNewsScrape()
 
+    for i in ListOfThings:
+        print(f"Topic: {i.topic}\nTitle: {i.title}\nLink: {i.link}\n")
 def FoxNewsScrape():
 
     Articles = []
-    Entry = FoxNewsArticle
     ExclusiveClipsSection = driver.find_elements(By.XPATH, "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div[3]/section/div/article")
 
-    for i in range(1, len(ExclusiveClipsSection)):
+    for i in range(1, len(ExclusiveClipsSection) + 1):
 
+        Entry = FoxNewsArticle()
         Entry.topic = driver.find_element(By.XPATH, "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div[3]/section/div/article[{}]/div[2]/header/div/span/a".format(i)).get_attribute("textContent")
         Entry.title = driver.find_element(By.XPATH, "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div[3]/section/div/article[{}]/div[2]/header/h2/a".format(i)).get_attribute("textContent")
         Entry.link = driver.find_element(By.XPATH, "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div[3]/section/div/article[{}]/div[2]/header/h2/a".format(i)).get_attribute("href")
@@ -31,7 +35,9 @@ def FoxNewsScrape():
 
 
 
-        return Articles
+    return Articles
+
+#FoxNewsPrint()
 
 
 articlesList = driver.find_elements(By.TAG_NAME, "article")
