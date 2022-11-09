@@ -15,7 +15,10 @@ The idea is to speed up information gathered from news websides. You are going t
 # Resources
 
 [Chrome Driver](https://chromedriver.chromium.org/downloads)
+
 [Selenium](https://selenium-python.readthedocs.io)
+
 [Understanding XPath](https://www.guru99.com/xpath-selenium.html)
+
 [More XPath Knowledge](https://www.w3schools.com/xml/xpath_syntax.asp)
 
