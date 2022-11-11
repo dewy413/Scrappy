@@ -57,15 +57,25 @@ def FoxNewsScrape():
         Articles.append(HeadlineClips)
     for i in range(1, ExclusiveClipsSection):
         ExclusiveClips = FoxNewsArticle()
-        ExclusiveClips.topic = driver.find_element(By.XPATH,
-                                                   "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div[3]/section/div/article[{}]/div[2]/header/div/span/a".format(
-                                                       i)).get_attribute("textContent")
+        try:
+            ExclusiveClips.topic = driver.find_element(By.XPATH,
+                                                       "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div["
+                                                       "3]/section/div/article[{}]/div[2]/header/div/span/a".format(
+                                                           i)).get_attribute("textContent").upper()
+        except:
+            ExclusiveClips.topic = "N/A"
+
         ExclusiveClips.title = driver.find_element(By.XPATH,
-                                                   "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div[3]/section/div/article[{}]/div[2]/header/h2/a".format(
+                                                   "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div["
+                                                   "3]/section/div/article[{}]/div[2]/header/h2/a".format(
                                                        i)).get_attribute("textContent")
         ExclusiveClips.link = driver.find_element(By.XPATH,
-                                                  "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div[3]/section/div/article[{}]/div[2]/header/h2/a".format(
+                                                  "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div["
+                                                  "3]/section/div/article[{}]/div[2]/header/h2/a".format(
                                                       i)).get_attribute("href")
+
+
+
 
         Articles.append(ExclusiveClips)
 
