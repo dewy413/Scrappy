@@ -22,3 +22,4 @@ The idea is to speed up information gathered from news websides. You are going t
 
 [More XPath Knowledge](https://www.w3schools.com/xml/xpath_syntax.asp)
 
+[XPath Wikipedia](https://en.wikipedia.org/wiki/XPath)
