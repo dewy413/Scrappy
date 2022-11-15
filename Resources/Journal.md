@@ -12,3 +12,7 @@ I realized I might want to use BeautifulSoup in combination with Selenium for be
 # 11/11/2022
 
 I got a pretty good flow of what I am doing. I should have the Fox News website done by Tuesday. It is mostly just copy and paste. I think that I will try and make it more dynamic if I can. I honestly might not be able to, but it is what it is.
+
+# 11/15/2022
+
+Back to working on this. I relaxed a good amount this weekend, but I am ready to present today.
