@@ -34,6 +34,8 @@ def FoxNewsHeadline():
         "href")  # HeadLine Link
 
     return Headline
+
+
 def FoxNewsScrape():
     Articles = []
     Articles.append(FoxNewsHeadline())
@@ -43,10 +45,7 @@ def FoxNewsScrape():
     HeadlineClipsSection = len(
         driver.find_elements(By.XPATH, "//*[@id='wrapper']/div/div[2]/div[1]/main/div/div/div[3]/div/article")) + 1
 
-    driver.execute_script("window.scrollTo(0,1500)")
-
-    ExtraArticlesSection = len(
-        driver.find_elements(By.XPATH, '//*[@id="wrapper"]/div/div[2]/div[1]/main/div/div/div[5]/div/div')) + 1
+    driver.execute_script("window.scrollTo(0,3000)")
 
     for i in range(1, HeadlineClipsSection):
         HeadlineClips = FoxNewsArticle()
@@ -78,30 +77,17 @@ def FoxNewsScrape():
                                                   "3]/section/div/article[{}]/div[2]/header/h2/a".format(
                                                       i)).get_attribute("href")
         Articles.append(ExclusiveClips)
-    for i in range(1, 3):
-        ExtraArticle = FoxNewsArticle()
-        try:
-            ExtraArticle.topic = driver.find_element(By.XPATH,
-                                                       "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div["
-                                                       "3]/section/div/article[{}]/div[2]/header/div/span/a".format(
-                                                           i)).get_attribute("textContent").upper()
-        except:
-            ExtraArticle.topic = "N/A"
-
-        ExtraArticle.title = driver.find_element(By.XPATH,
-                                                  '//*[@id="wrapper"]/div/div[2]/div[1]/main/div/div/div[5]/div/div/article[{}]/div[2]/header/h2/a'.format(
-                                                      i)).get_attribute("textContent")
-        ExtraArticle.link = driver.find_element(By.XPATH,
-                                                 '//*[@id="wrapper"]/div/div[2]/div[1]/main/div/div/div[5]/div/div/article[1]/div[2]/header/h2/a'.format(
-                                                     i)).get_attribute("href")
-
-        Articles.append(ExtraArticle)
-
 
     return Articles
 
+def testingCode():
+    driver.execute_script("window.scrollTo(0,3000)")
 
+    ExtraArticles = driver.find_elements(By.XPATH, "//div[@class='collection collection-article-list']//div[@class='content article-list']//child::article")
 
+    for i in range(1, len(ExtraArticles)):
+        print(ExtraArticles[i].find_element(By.XPATH, "//div[@class='collection collection-article-list']//div[@class='content article-list']//article[contains(@class, 'article story-{}')]//div[@class='m']//a".format(i)).get_attribute('href'))
 
-FoxNewsPrint()
+testingCode()
+#FoxNewsPrint()
 driver.close()
