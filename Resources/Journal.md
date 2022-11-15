@@ -15,4 +15,4 @@ I got a pretty good flow of what I am doing. I should have the Fox News website 
 
 # 11/15/2022
 
-Back to working on this. I relaxed a good amount this weekend, but I am ready to present today.
+Back to working on this. I relaxed a good amount this weekend, but I am ready to present today. I have hit my first wall which is a little bit concerning, but I will work on fixing it. I need to do a good amount of research on what XPath is and how it works. It seems to be the best way to search for elements on a webpage, which I have been using. There is just so much to it.
