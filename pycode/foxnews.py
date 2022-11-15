@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+import time
 
 options = Options()
 options.add_argument("headless")
@@ -42,8 +43,10 @@ def FoxNewsScrape():
     HeadlineClipsSection = len(
         driver.find_elements(By.XPATH, "//*[@id='wrapper']/div/div[2]/div[1]/main/div/div/div[3]/div/article")) + 1
 
+    driver.execute_script("window.scrollTo(0,1500)")
 
-    artswitch = True
+    ExtraArticlesSection = len(
+        driver.find_elements(By.XPATH, '//*[@id="wrapper"]/div/div[2]/div[1]/main/div/div/div[5]/div/div')) + 1
 
     for i in range(1, HeadlineClipsSection):
         HeadlineClips = FoxNewsArticle()
@@ -75,32 +78,29 @@ def FoxNewsScrape():
                                                   "3]/section/div/article[{}]/div[2]/header/h2/a".format(
                                                       i)).get_attribute("href")
         Articles.append(ExclusiveClips)
-    while artswitch:
-        i = 0
+    for i in range(1, 3):
         ExtraArticle = FoxNewsArticle()
-
         try:
-            try:
-                ExtraArticle.topic = driver.find_element(By.XPATH,
-                                                         "//*[@id='wrapper']/div/div[2]/div[1]/main/div/div/div[5]/div/div/article[{}]/div[2]/header/div/span[1]/a".format(
-                                                             i)).get_attribute("textContent").upper()
-            except:
-                ExtraArticle.topic = "N/A"
-
-            ExtraArticle.title = driver.find_element(By.XPATH,
-                                                     "//*[@id='wrapper']/div/div[2]/div[1]/main/div/div/div[5]/div/div/article[{}]/div[2]/header/h2/a".format(
-                                                         i)).get_attribute("textContent")
-            ExtraArticle.link = driver.find_element(By.XPATH,
-                                                    "//*[@id='wrapper']/div/div[2]/div[1]/main/div/div/div[5]/div/div/article[1]/div[2]/header/h2/a".format(
-                                                        i)).get_attribute("href")
-
-
+            ExtraArticle.topic = driver.find_element(By.XPATH,
+                                                       "//*[@id='wrapper']/div/div[2]/div[1]/aside[1]/div/div/div["
+                                                       "3]/section/div/article[{}]/div[2]/header/div/span/a".format(
+                                                           i)).get_attribute("textContent").upper()
         except:
-            artswitch = False
+            ExtraArticle.topic = "N/A"
+
+        ExtraArticle.title = driver.find_element(By.XPATH,
+                                                  '//*[@id="wrapper"]/div/div[2]/div[1]/main/div/div/div[5]/div/div/article[{}]/div[2]/header/h2/a'.format(
+                                                      i)).get_attribute("textContent")
+        ExtraArticle.link = driver.find_element(By.XPATH,
+                                                 '//*[@id="wrapper"]/div/div[2]/div[1]/main/div/div/div[5]/div/div/article[1]/div[2]/header/h2/a'.format(
+                                                     i)).get_attribute("href")
 
         Articles.append(ExtraArticle)
 
+
     return Articles
+
+
 
 
 FoxNewsPrint()
