@@ -15,7 +15,7 @@ class FoxNewsArticle:
     title = ""
     link = ""
 
-
+"testing change"
 def FoxNewsPrint():
     ListOfThings = FoxNewsScrape()
 
