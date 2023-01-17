@@ -15,7 +15,51 @@ class FoxNewsArticle:
     title = ""
     link = ""
 
-"testing change"
+
+# It is pulling links, but not in the right order. Figure it out sometime.s
+
+def GrabAllArticles():
+
+    ListOfArticles = driver.find_elements(By.XPATH, "//article")
+    ListOfURLS = driver.find_elements(By.XPATH, "//article//div[@class = 'info']//header//h2//a")
+    del ListOfArticles[0:10:1]
+    del ListOfURLS[0:10:1]
+    FoxNewsArticles = []
+    driver.execute_script("window.scrollTo(0,3000)")
+
+    for i in ListOfURLS:
+        print(i.get_attribute("href"))
+
+    for i in range(len(ListOfArticles)):
+        ElementsList = (ListOfArticles[i].text).split("\n")
+        try:
+            URL = ListOfURLS[i].get_attribute("href")
+        except:
+            tempArticle = FoxNewsArticle()
+            match (len(ElementsList)):
+                case 2:
+                    tempArticle.topic = ElementsList[0]
+                    tempArticle.title = ElementsList[1]
+                    tempArticle.link = "No ARTICLE"
+                    FoxNewsArticles.append(tempArticle)
+
+        tempArticle = FoxNewsArticle()
+        match(len(ElementsList)):
+            case 2:
+                tempArticle.topic = ElementsList[0]
+                tempArticle.title = ElementsList[1]
+                tempArticle.link = URL
+                FoxNewsArticles.append(tempArticle)
+
+
+    for i in range(len(FoxNewsArticles)):
+        print("\nTitle: " + FoxNewsArticles[i].title + "\nTopic: " + FoxNewsArticles[i].topic + "\nLink: " + FoxNewsArticles[i].link)
+
+
+
+
+
+
 def FoxNewsPrint():
     ListOfThings = FoxNewsScrape()
 
@@ -84,10 +128,9 @@ def testingCode():
     driver.execute_script("window.scrollTo(0,3000)")
 
     ExtraArticles = driver.find_elements(By.XPATH, "//div[@class='collection collection-article-list']//div[@class='content article-list']//child::article")
-
+    print(len(ExtraArticles))
     for i in range(1, len(ExtraArticles)):
         print(ExtraArticles[i].find_element(By.XPATH, "//div[@class='collection collection-article-list']//div[@class='content article-list']//article[contains(@class, 'article story-{}')]//div[@class='m']//a".format(i)).get_attribute('href'))
 
-testingCode()
-#FoxNewsPrint()
+GrabAllArticles()
 driver.close()
