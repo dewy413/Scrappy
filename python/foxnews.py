@@ -98,4 +98,4 @@ desiredArticles = SearchArticles(listOfArticles, searchTerm)
 
 #test
 
-driver.close()
+driver.quit()

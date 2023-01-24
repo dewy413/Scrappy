@@ -39,7 +39,7 @@
      <string>Search</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="searchEdit">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -52,7 +52,7 @@
      <string>Keyword</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="listWidget">
+   <widget class="QListWidget" name="searchResults">
     <property name="geometry">
      <rect>
       <x>465</x>
