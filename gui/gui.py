@@ -1,15 +1,19 @@
 import sys
+from python.foxnews import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
 from PyQt5 import uic #This was a causing so much trouble, but I figured it out eventually.
+
+from python.foxnews import GrabFoxArticles
+
+listOfArticles = GrabFoxArticles()
 
 class GUI(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = None
         self.loadUI()
-        self.searchButton.clicked.connect(self.printValue)
+        self.searchButton.clicked.connect(self.searchResults())
+
 
     def loadUI(self):
         self.ui = uic.loadUi("app.ui", self)
@@ -17,7 +21,8 @@ class GUI(QMainWindow):
 
 
     def searchResults(self):
-
+        for i in range(len(listOfArticles)):
+            print("\nTitle: " + listOfArticles[i].title + "\nLink: " + listOfArticles[i].link)
 
 
 
