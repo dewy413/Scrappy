@@ -25,6 +25,9 @@ class FoxNewsArticle:
 #     return finalList
 
 
+def sayHi():
+    print("hi")
+
 def GrabFoxArticles():
     ListOfArticles = driver.find_elements(By.XPATH, "//article//h2//a")
     del ListOfArticles[0:10:1]
@@ -81,6 +84,7 @@ def GrabAllArticles():
 
 
 def SearchArticles(listOfArticles, keyword):
+
     desiredArticles = []
 
     for article in listOfArticles:
@@ -92,10 +96,8 @@ def SearchArticles(listOfArticles, keyword):
         print("\nTitle: " + desiredArticles[i].title + "\nLink: " + desiredArticles[i].link)
 
 
-listOfArticles = GrabFoxArticles()
-searchTerm = input("Enter a keyword: ")
-desiredArticles = SearchArticles(listOfArticles, searchTerm)
+# listOfArticles = GrabFoxArticles()
+# searchTerm = input("Enter a keyword: ")
+# desiredArticles = SearchArticles(listOfArticles, searchTerm)
 
-#test
-
-driver.quit()
+driver.close()

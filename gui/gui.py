@@ -1,13 +1,15 @@
-import sys, time
+import sys
+
+from python.foxnews import *
 from PyQt5.QtWidgets import *
 from PyQt5 import uic #This was a causing so much trouble, but I figured it out eventually.
-#from python.foxnews import *
 
+ui = None
 class GUI(QMainWindow):
     def __init__(self):
         super().__init__()
         self.searchButton = None
-        self.ui = None
+        self.ui = ui
         self.loadUI()
         self.searchButton.clicked.connect(lambda: self.printValue())
 
@@ -18,11 +20,7 @@ class GUI(QMainWindow):
 
 
     def printValue(self):
-        print(self.searchEdit.text())
-
-
-
-
+        sayHi()
 
 def runProgram():
     app = QApplication(sys.argv)
