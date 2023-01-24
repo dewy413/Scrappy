@@ -9,10 +9,18 @@ class GUI(QMainWindow):
         super().__init__()
         self.ui = None
         self.loadUI()
+        self.searchButton.clicked.connect(self.printValue)
 
     def loadUI(self):
         self.ui = uic.loadUi("app.ui", self)
         self.show()
+
+
+    def searchResults(self):
+
+
+
+
 
 
 
@@ -25,4 +33,4 @@ if __name__ == '__main__':
     try:
         sys.exit(app.exec_())
     except SystemExit:
-        print("CLosed")
+        print("Program Closed")
