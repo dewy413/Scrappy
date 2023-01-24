@@ -96,5 +96,6 @@ listOfArticles = GrabFoxArticles()
 searchTerm = input("Enter a keyword: ")
 desiredArticles = SearchArticles(listOfArticles, searchTerm)
 
+#test
 
 driver.close()
