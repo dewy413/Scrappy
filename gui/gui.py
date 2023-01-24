@@ -1,10 +1,8 @@
-import sys
-
-#from python.foxnews import sayHi
+import sys, time
 from PyQt5.QtWidgets import *
 from PyQt5 import uic  #This was a causing so much trouble, but I figured it out eventually.
+from python.foxnews import *
 
-from python.foxnews import sayHi
 
 ui = None
 class GUI(QMainWindow):
@@ -22,7 +20,13 @@ class GUI(QMainWindow):
 
 
     def printValue(self):
-        sayHi()
+        listOfArticle = GrabFoxArticles()
+        PrintArticles(listOfArticle)
+        for i in range(len(listOfArticle)):
+            self.searchResults.addItem("\nTitle: " + listOfArticle[i].title + "\nLink: " + listOfArticle[i].link + "\n")
+
+        time.sleep(2)
+
 
 def runProgram():
     app = QApplication(sys.argv)
@@ -37,5 +41,4 @@ def runProgram():
         print("Program Closed")
 
 
-sayHi()
 runProgram()

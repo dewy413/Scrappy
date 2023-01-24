@@ -1,13 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-
-options = Options()
-options.add_argument("headless")
-options.add_argument('--disable-gpu')
-driver = webdriver.Chrome(options=options)
-driver.get("https://www.foxnews.com/")
-
+import time
 
 class FoxNewsArticle:
     topic = ""
@@ -30,6 +24,11 @@ def sayHi():
     return "hi"
 
 def GrabFoxArticles():
+    options = Options()
+    options.add_argument("headless")
+    options.add_argument('--disable-gpu')
+    driver = webdriver.Chrome(options=options)
+    driver.get("https://www.foxnews.com/")
     ListOfArticles = driver.find_elements(By.XPATH, "//article//h2//a")
     del ListOfArticles[0:10:1]
     FoxNewsArticles = []
@@ -43,46 +42,12 @@ def GrabFoxArticles():
         tempArticle.link = ListOfArticles[i].get_attribute("href")
         FoxNewsArticles.append(tempArticle)
 
+    driver.close()
+
     return FoxNewsArticles
-
-
-# def GrabAllArticles():
-#     ListOfArticles = driver.find_elements(By.XPATH, "//article")
-#     ListOfURLS = driver.find_elements(By.XPATH, "//article//div[@class = 'info']//header//h2//a")
-#     del ListOfArticles[0:10:1]
-#     del ListOfArticles[45:46:1]
-#     del ListOfArticles[55:67:1]
-#     del ListOfURLS[0:10:1]
-#     FoxNewsArticles = []
-#     driver.execute_script("window.scrollTo(0,3000)")
-#
-#     for i in range(len(ListOfArticles)):
-#         ElementsList = (ListOfArticles[i].text).split("\n")
-#         try:
-#             URL = ListOfURLS[i].get_attribute("href")
-#         except:
-#             tempArticle = FoxNewsArticle()
-#             match (len(ElementsList)):
-#                 case 2:
-#                     tempArticle.topic = ElementsList[0]
-#                     tempArticle.title = ElementsList[1]
-#                     tempArticle.link = "No ARTICLE"
-#                     FoxNewsArticles.append(tempArticle)
-#
-#         tempArticle = FoxNewsArticle()
-#         match (len(ElementsList)):
-#             case 2:
-#                 tempArticle.topic = ElementsList[0]
-#                 tempArticle.title = ElementsList[1]
-#                 tempArticle.link = URL
-#                 FoxNewsArticles.append(tempArticle)
-#
-#     for i in range(len(FoxNewsArticles)):
-#         print("\nTitle: " + FoxNewsArticles[i].title + "\nTopic: " + FoxNewsArticles[i].topic + "\nLink: " +
-#               FoxNewsArticles[i].link)
-#
-#     return FoxNewsArticles
-
+def PrintArticles(listOfArticles):
+    for i in range(len(listOfArticles)):
+        print("\nTitle: " + listOfArticles[i].title + "\nLink: " + listOfArticles[i].link + "\n")
 
 def SearchArticles(listOfArticles, keyword):
 
@@ -101,4 +66,4 @@ def SearchArticles(listOfArticles, keyword):
 # searchTerm = input("Enter a keyword: ")
 # desiredArticles = SearchArticles(listOfArticles, searchTerm)
 
-driver.close()
+
