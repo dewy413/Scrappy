@@ -1,8 +1,10 @@
 import sys
 
-from python.foxnews import *
+#from python.foxnews import sayHi
 from PyQt5.QtWidgets import *
-from PyQt5 import uic #This was a causing so much trouble, but I figured it out eventually.
+from PyQt5 import uic  #This was a causing so much trouble, but I figured it out eventually.
+
+from python.foxnews import sayHi
 
 ui = None
 class GUI(QMainWindow):
@@ -35,5 +37,5 @@ def runProgram():
         print("Program Closed")
 
 
-
+sayHi()
 runProgram()

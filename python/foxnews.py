@@ -27,6 +27,7 @@ class FoxNewsArticle:
 
 def sayHi():
     print("hi")
+    return "hi"
 
 def GrabFoxArticles():
     ListOfArticles = driver.find_elements(By.XPATH, "//article//h2//a")
@@ -45,42 +46,42 @@ def GrabFoxArticles():
     return FoxNewsArticles
 
 
-def GrabAllArticles():
-    ListOfArticles = driver.find_elements(By.XPATH, "//article")
-    ListOfURLS = driver.find_elements(By.XPATH, "//article//div[@class = 'info']//header//h2//a")
-    del ListOfArticles[0:10:1]
-    del ListOfArticles[45:46:1]
-    del ListOfArticles[55:67:1]
-    del ListOfURLS[0:10:1]
-    FoxNewsArticles = []
-    driver.execute_script("window.scrollTo(0,3000)")
-
-    for i in range(len(ListOfArticles)):
-        ElementsList = (ListOfArticles[i].text).split("\n")
-        try:
-            URL = ListOfURLS[i].get_attribute("href")
-        except:
-            tempArticle = FoxNewsArticle()
-            match (len(ElementsList)):
-                case 2:
-                    tempArticle.topic = ElementsList[0]
-                    tempArticle.title = ElementsList[1]
-                    tempArticle.link = "No ARTICLE"
-                    FoxNewsArticles.append(tempArticle)
-
-        tempArticle = FoxNewsArticle()
-        match (len(ElementsList)):
-            case 2:
-                tempArticle.topic = ElementsList[0]
-                tempArticle.title = ElementsList[1]
-                tempArticle.link = URL
-                FoxNewsArticles.append(tempArticle)
-
-    for i in range(len(FoxNewsArticles)):
-        print("\nTitle: " + FoxNewsArticles[i].title + "\nTopic: " + FoxNewsArticles[i].topic + "\nLink: " +
-              FoxNewsArticles[i].link)
-
-    return FoxNewsArticles
+# def GrabAllArticles():
+#     ListOfArticles = driver.find_elements(By.XPATH, "//article")
+#     ListOfURLS = driver.find_elements(By.XPATH, "//article//div[@class = 'info']//header//h2//a")
+#     del ListOfArticles[0:10:1]
+#     del ListOfArticles[45:46:1]
+#     del ListOfArticles[55:67:1]
+#     del ListOfURLS[0:10:1]
+#     FoxNewsArticles = []
+#     driver.execute_script("window.scrollTo(0,3000)")
+#
+#     for i in range(len(ListOfArticles)):
+#         ElementsList = (ListOfArticles[i].text).split("\n")
+#         try:
+#             URL = ListOfURLS[i].get_attribute("href")
+#         except:
+#             tempArticle = FoxNewsArticle()
+#             match (len(ElementsList)):
+#                 case 2:
+#                     tempArticle.topic = ElementsList[0]
+#                     tempArticle.title = ElementsList[1]
+#                     tempArticle.link = "No ARTICLE"
+#                     FoxNewsArticles.append(tempArticle)
+#
+#         tempArticle = FoxNewsArticle()
+#         match (len(ElementsList)):
+#             case 2:
+#                 tempArticle.topic = ElementsList[0]
+#                 tempArticle.title = ElementsList[1]
+#                 tempArticle.link = URL
+#                 FoxNewsArticles.append(tempArticle)
+#
+#     for i in range(len(FoxNewsArticles)):
+#         print("\nTitle: " + FoxNewsArticles[i].title + "\nTopic: " + FoxNewsArticles[i].topic + "\nLink: " +
+#               FoxNewsArticles[i].link)
+#
+#     return FoxNewsArticles
 
 
 def SearchArticles(listOfArticles, keyword):
