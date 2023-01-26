@@ -7,22 +7,7 @@ class FoxNewsArticle:
     topic = ""
     title = ""
     link = ""
-
-
-# def removeCopies(listOfArticles):
-#     finalList = []
-#
-#     for i in range(len(listOfArticles)):
-#         if listOfArticles[i].title not in finalList:
-#             finalList.append(listOfArticles[i])
-#
-#     return finalList
-
-
-def sayHi():
-    print("hi")
-    return "hi"
-
+    
 def GrabFoxArticles():
     options = Options()
     options.add_argument("headless")
@@ -45,6 +30,8 @@ def GrabFoxArticles():
     driver.close()
 
     return FoxNewsArticles
+
+
 def PrintArticles(listOfArticles):
     for i in range(len(listOfArticles)):
         print("\nTitle: " + listOfArticles[i].title + "\nLink: " + listOfArticles[i].link + "\n")
@@ -60,10 +47,5 @@ def SearchArticles(listOfArticles, keyword):
     print("List of articles containing " + keyword + ":\n")
     for i in range(len(desiredArticles)):
         print("\nTitle: " + desiredArticles[i].title + "\nLink: " + desiredArticles[i].link)
-
-
-# listOfArticles = GrabFoxArticles()
-# searchTerm = input("Enter a keyword: ")
-# desiredArticles = SearchArticles(listOfArticles, searchTerm)
 
 
