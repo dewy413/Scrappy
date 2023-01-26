@@ -3,11 +3,13 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import time
 
+
 class FoxNewsArticle:
     topic = ""
     title = ""
     link = ""
-    
+
+
 def GrabFoxArticles():
     options = Options()
     options.add_argument("headless")
@@ -36,16 +38,12 @@ def PrintArticles(listOfArticles):
     for i in range(len(listOfArticles)):
         print("\nTitle: " + listOfArticles[i].title + "\nLink: " + listOfArticles[i].link + "\n")
 
+
 def SearchArticles(listOfArticles, keyword):
-
     desiredArticles = []
-
     for article in listOfArticles:
         if keyword.lower() in article.title.lower():
             desiredArticles.append(article)
 
-    print("List of articles containing " + keyword + ":\n")
-    for i in range(len(desiredArticles)):
-        print("\nTitle: " + desiredArticles[i].title + "\nLink: " + desiredArticles[i].link)
 
-
+    return desiredArticles
