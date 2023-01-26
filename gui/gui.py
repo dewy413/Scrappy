@@ -14,6 +14,7 @@ class GUI(QMainWindow):
         self.searchButton.clicked.connect(lambda: self.searchKeyword()) #Sets to when the button is press
         self.refreshButton.clicked.connect(lambda: self.refresh()) #Sets to when the button is press
         self.startButton.clicked.connect(lambda: StartEngine())
+        self.clearButton.clicked.connect(lambda: self.clearArticles())
 
     def loadUI(self):
         self.ui = uic.loadUi("app.ui", self)
@@ -25,6 +26,10 @@ class GUI(QMainWindow):
 
         for i in range(len(desiredArticles)):
             self.searchResults.addItem("\nTitle: " + desiredArticles[i].title + "\nLink: " + desiredArticles[i].link + "\n")
+
+
+    def clearArticles(self):
+        self.searchResults.clear()
 
 
     def refresh(self):
