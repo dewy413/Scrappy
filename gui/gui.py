@@ -1,6 +1,6 @@
 import sys, time
 from PyQt5.QtWidgets import *
-from PyQt5 import uic  #This was a causing so much trouble, but I figured it out eventually.
+from PyQt5 import uic  #This isn't causing an error
 from python.foxnews import *
 
 
@@ -11,21 +11,19 @@ class GUI(QMainWindow):
         self.searchButton = None
         self.ui = ui
         self.loadUI()
-        self.searchButton.clicked.connect(lambda: self.printValue())
+        self.searchButton.clicked.connect(lambda: self.printValue()) #Sets to when the button is press
+        self.refreshButton.clicked.connect(lambda: self.refresh()) #Sets to when the button is press
 
 
     def loadUI(self):
         self.ui = uic.loadUi("app.ui", self)
         self.show()
 
-
-    def printValue(self):
+    def refresh(self):
         listOfArticle = GrabFoxArticles()
-        PrintArticles(listOfArticle)
+        self.searchResults.addItems(listOfArticle)
         for i in range(len(listOfArticle)):
             self.searchResults.addItem("\nTitle: " + listOfArticle[i].title + "\nLink: " + listOfArticle[i].link + "\n")
-
-        time.sleep(2)
 
 
 def runProgram():
