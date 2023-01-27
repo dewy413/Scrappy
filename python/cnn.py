@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 
 from data import Article
 
-def GrabCNNArticles():
+def GrabCNNArticles() -> list[Article]:
     
     options = Options()
     options.add_argument('headless')
