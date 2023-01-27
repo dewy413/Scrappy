@@ -1,15 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from dataclasses import dataclass
 
-@dataclass
-class Article:
-    title: str
-    link: str
+from data import Article
 
-
-def GrabFoxArticles():
+def GrabFoxArticles() -> list[Article]:
     
     options = Options()
     options.add_argument("headless")
@@ -18,15 +13,15 @@ def GrabFoxArticles():
     driver = webdriver.Chrome(options=options)
     driver.get("https://www.foxnews.com/")
     
-    ListOfArticles = driver.find_elements(By.XPATH, "//article//h2//a")
-    del ListOfArticles[0:10:1]
+    articles = driver.find_elements(By.XPATH, "//article//h2//a")
+    del articles[0:10:1]
     
-    FoxNewsArticles = [Article(article.text, article.getAttribute('href')) for article in ListOfArticles]
+    FoxNewsArticles = [Article(article.text, article.getAttribute('href')) for article in articles]
     driver.close()
 
     return FoxNewsArticles
 
 
-def SearchArticles(listOfArticles, keyword):
-    return [article for article in listOfArticles if keyword.lower() in article.title.lower()]
+def SearchArticles(articles: Article, keyword: str) -> list[Article]:
+    return [article for article in articles if keyword.lower() in article.title.lower()]
 

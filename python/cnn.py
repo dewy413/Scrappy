@@ -2,19 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
-
-class Article:
-    title = ""
-    link = ""
-
-
-
-
-
-
-
-
-
+from data import Article
 
 def GrabCNNArticles():
     options = Options()
@@ -35,8 +23,4 @@ def GrabCNNArticles():
 
     driver.close()
 
-
     return CNNArticles
-
-
-
