@@ -1,11 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from python.scraper import Article
 
-
-class FoxNewsArticle:
-    title = ""
-    link = ""
 
 
 def GrabFoxArticles():
@@ -18,11 +15,8 @@ def GrabFoxArticles():
     del ListOfArticles[0:10:1]
     FoxNewsArticles = []
 
-    driver.execute_script("window.scrollTo(0,3000)")
-
     for i in range(len(ListOfArticles)):
-        tempArticle = FoxNewsArticle()
-        tempArticle.topic = "N/A"
+        tempArticle = Article()
         tempArticle.title = ListOfArticles[i].text
         tempArticle.link = ListOfArticles[i].get_attribute("href")
         FoxNewsArticles.append(tempArticle)
@@ -39,3 +33,5 @@ def SearchArticles(listOfArticles, keyword):
             desiredArticles.append(article)
 
     return desiredArticles
+
+
