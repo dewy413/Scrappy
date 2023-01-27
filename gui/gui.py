@@ -47,11 +47,7 @@ def runProgram():
     window = GUI()
     window.show()
 
-    try:
-        sys.exit(app.exec_())
-
-    except SystemExit:
-        print("Program Closed")
+    sys.exit(app.exec_())
 
 
 runProgram()
