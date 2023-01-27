@@ -1,7 +1,12 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from python.scraper import Article
+
+
+class Article:
+    title = ""
+    link = ""
+
 
 
 
@@ -35,8 +40,3 @@ def GrabCNNArticles():
 
 
 
-
-
-
-
-GrabCNNArticles()

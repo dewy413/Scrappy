@@ -2,7 +2,7 @@ import sys, time
 from PyQt5.QtWidgets import *
 from PyQt5 import uic  #This isn't causing an error
 from python.foxnews import *
-from python.scraper import *
+from python.cnn import *
 
 
 ui = None
@@ -13,7 +13,6 @@ class GUI(QMainWindow):
         self.loadUI()
         self.searchButton.clicked.connect(lambda: self.searchKeyword()) #Sets to when the button is press
         self.refreshButton.clicked.connect(lambda: self.refresh()) #Sets to when the button is press
-        self.startButton.clicked.connect(lambda: StartEngine())
         self.clearButton.clicked.connect(lambda: self.clearArticles())
 
     def loadUI(self):
@@ -34,8 +33,12 @@ class GUI(QMainWindow):
 
     def refresh(self):
         listOfArticles = GrabFoxArticles()
+        CNNArticles = GrabCNNArticles()
         for i in range(len(listOfArticles)):
-            self.searchResults.addItem("\nTitle: " + listOfArticles[i].title + "\nLink: " + listOfArticles[i].link + "\n")
+            self.searchResults.addItem("Website: FOX\n" + "\nTitle: " + listOfArticles[i].title + "\nLink: " + listOfArticles[i].link + "\n")
+        for i in range(len(CNNArticles)):
+            self.searchResults.addItem("Website: CNN\n" + "\nTitle: " + CNNArticles[i].title + "\nLink: " + CNNArticles[i].link + "\n")
+
 
 
 def runProgram():
