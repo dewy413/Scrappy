@@ -5,22 +5,17 @@ from selenium.webdriver.common.by import By
 from data import Article
 
 def GrabCNNArticles():
+    
     options = Options()
-    options.add_argument("headless")
+    options.add_argument('headless')
     options.add_argument('--disable-gpu')
+    
     driver = webdriver.Chrome(options=options)
-    driver.get("https://www.cnn.com/")
+    driver.get('https://www.cnn.com/')
 
-    articles = driver.find_elements(By.CSS_SELECTOR, ".cd__headline")
-    CNNArticles = []
-
-    # iterate through the articles and print their titles and URLs
-    for article in articles:
-        tempArticle = Article()
-        tempArticle.title = article.find_element(By.TAG_NAME, "a").text
-        tempArticle.link = article.find_element(By.TAG_NAME, "a").get_attribute("href")
-        CNNArticles.append(tempArticle)
-
+    articles = driver.find_elements(By.CSS_SELECTOR, '.cd__headline')
+    
+    CNNArticles = [Article(article.find_element(By.TAG_NAME, 'a').text, article.find_element(By.TAG_NAME, 'a').get_attribute('href')) for article in articles]
     driver.close()
 
     return CNNArticles
