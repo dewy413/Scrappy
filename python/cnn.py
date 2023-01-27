@@ -6,6 +6,10 @@ from data import Article
 
 def GrabCNNArticles() -> list[Article]:
     
+    '''
+        Scrape the headlines and URLs of articles from the CNN website.
+    '''
+    
     options = Options()
     options.add_argument('headless')
     options.add_argument('--disable-gpu')
