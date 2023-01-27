@@ -30,11 +30,5 @@ def GrabFoxArticles():
 
 
 def SearchArticles(listOfArticles, keyword):
-    desiredArticles = []
-    for article in listOfArticles:
-        if keyword.lower() in article.title.lower():
-            desiredArticles.append(article)
-
-    return desiredArticles
-
+    return [article for article in listOfArticles if keyword.lower() in article.title.lower()]
 
