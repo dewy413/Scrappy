@@ -16,7 +16,7 @@ def GrabFoxArticles() -> list[Article]:
     articles = driver.find_elements(By.XPATH, "//article//h2//a")
     del articles[0:10:1]
     
-    FoxNewsArticles = [Article(article.text, article.getAttribute('href')) for article in articles]
+    FoxNewsArticles = [Article(article.text, article.get_attribute('href')) for article in articles]
     driver.close()
 
     return FoxNewsArticles
