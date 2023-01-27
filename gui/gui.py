@@ -1,4 +1,4 @@
-import sys, time
+import sys, time, threading
 from PyQt5.QtWidgets import *
 from PyQt5 import uic  #This isn't causing an error
 from python.foxnews import *
@@ -12,7 +12,7 @@ class GUI(QMainWindow):
         self.ui = ui
         self.loadUI()
         self.searchButton.clicked.connect(lambda: self.searchKeyword()) #Sets to when the button is press
-        self.refreshButton.clicked.connect(lambda: self.refresh()) #Sets to when the button is press
+        self.refreshButton.clicked.connect(lambda: self.startScraping()) #Sets to when the button is press
         self.clearButton.clicked.connect(lambda: self.clearArticles())
 
     def loadUI(self):
