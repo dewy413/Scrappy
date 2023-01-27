@@ -22,6 +22,6 @@ def GrabFoxArticles() -> list[Article]:
     return FoxNewsArticles
 
 
-def SearchArticles(articles: Article, keyword: str) -> list[Article]:
+def SearchArticles(articles: list[Article], keyword: str) -> list[Article]:
     return [article for article in articles if keyword.lower() in article.title.lower()]
 
