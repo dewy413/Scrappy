@@ -1,8 +1,8 @@
 import sys, time, threading
 from PyQt5.QtWidgets import *
 from PyQt5 import uic  #This isn't causing an error
-from python.foxnews import *
-from python.cnn import *
+from fetcher.foxnews import GrabFoxArticles, SearchArticles
+from fetcher.cnn import GrabCNNArticles
 
 
 ui = None
@@ -12,11 +12,11 @@ class GUI(QMainWindow):
         self.ui = ui
         self.loadUI()
         self.searchButton.clicked.connect(lambda: self.searchKeyword()) #Sets to when the button is press
-        self.refreshButton.clicked.connect(lambda: self.startScraping()) #Sets to when the button is press
+        self.refreshButton.clicked.connect(lambda: self.refresh()) #Sets to when the button is press
         self.clearButton.clicked.connect(lambda: self.clearArticles())
 
     def loadUI(self):
-        self.ui = uic.loadUi("app.ui", self)
+        self.ui = uic.loadUi("./layout/app.ui", self)
         self.show()
 
     def searchKeyword(self):
