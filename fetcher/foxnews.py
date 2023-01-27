@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
-from data import Article
+from fetcher.data import Article
 
 def GrabFoxArticles() -> list[Article]:
     
