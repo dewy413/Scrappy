@@ -34,7 +34,7 @@ Might rewrite the code in C++ for speed. Not sure yet.
 
 
 #### Websites
-* Fox News (Works, Right)
+* Fox News (Works, Right) X 
 * Wall Street Journal (Works, Center)
-* CNN (Works, Left)
+* CNN (Works, Left) X 
 * New York Times (Works, Left)
