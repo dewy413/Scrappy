@@ -32,18 +32,14 @@ class GUI(QMainWindow):
 
 
     def refresh(self):
-        print("test")
         listOfArticles = GrabFoxArticles()
-        print("test")
-        CNNArticles = GrabCNNArticles()
-        print("test")
+        # CNNArticles = GrabCNNArticles()
         for i in range(len(listOfArticles)):
             self.searchResults.addItem("Website: FOX\n" + "\nTitle: " + listOfArticles[i].title + "\nLink: " + listOfArticles[i].link + "\n")
-        print("test")
-        for i in range(len(CNNArticles)):
-            self.searchResults.addItem("Website: CNN\n" + "\nTitle: " + CNNArticles[i].title + "\nLink: " + CNNArticles[i].link + "\n")
-
-
+        # for i in range(len(CNNArticles)):
+        #     self.searchResults.addItem("Website: CNN\n" + "\nTitle: " + CNNArticles[i].title + "\nLink: " + CNNArticles[i].link + "\n")
+        #
+        #
 
 def runProgram():
     app = QApplication(sys.argv)

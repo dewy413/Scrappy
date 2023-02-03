@@ -5,15 +5,12 @@ from selenium.webdriver.common.by import By
 from fetcher.data import Article
 
 def GrabFoxArticles() -> list[Article]:
-    
-    '''
-        Scrape the headlines and URLs of articles from the Fox News website.
-    '''
-    
+
+
     options = Options()
     options.add_argument("headless")
-    options.add_argument('--disable-gpu')
-    
+    #options.add_argument('--disable-gpu')
+
     driver = webdriver.Chrome(options=options)
     driver.get("https://www.foxnews.com/")
     
