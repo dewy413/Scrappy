@@ -16,7 +16,7 @@ class GUI(QMainWindow):
         self.clearButton.clicked.connect(lambda: self.clearArticles())
 
     def loadUI(self):
-        self.ui = uic.loadUi("./layout/app.ui", self)
+        self.ui = uic.loadUi("app.ui", self)
         self.show()
 
     def searchKeyword(self):
@@ -32,10 +32,14 @@ class GUI(QMainWindow):
 
 
     def refresh(self):
+        print("test")
         listOfArticles = GrabFoxArticles()
+        print("test")
         CNNArticles = GrabCNNArticles()
+        print("test")
         for i in range(len(listOfArticles)):
             self.searchResults.addItem("Website: FOX\n" + "\nTitle: " + listOfArticles[i].title + "\nLink: " + listOfArticles[i].link + "\n")
+        print("test")
         for i in range(len(CNNArticles)):
             self.searchResults.addItem("Website: CNN\n" + "\nTitle: " + CNNArticles[i].title + "\nLink: " + CNNArticles[i].link + "\n")
 
