@@ -1,11 +1,13 @@
 import sys, time, threading
 from PyQt5.QtWidgets import *
-from PyQt5 import uic  #This isn't causing an error
+from PyQt5 import uic, QtCore  # This isn't causing an error
 from fetcher.foxnews import GrabFoxArticles, SearchArticles
-from fetcher.cnn import GrabCNNArticles
+
 
 
 ui = None
+
+
 class GUI(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -36,10 +38,6 @@ class GUI(QMainWindow):
         # CNNArticles = GrabCNNArticles()
         for i in range(len(listOfArticles)):
             self.searchResults.addItem("Website: FOX\n" + "\nTitle: " + listOfArticles[i].title + "\nLink: " + listOfArticles[i].link + "\n")
-        # for i in range(len(CNNArticles)):
-        #     self.searchResults.addItem("Website: CNN\n" + "\nTitle: " + CNNArticles[i].title + "\nLink: " + CNNArticles[i].link + "\n")
-        #
-        #
 
 def runProgram():
     app = QApplication(sys.argv)
