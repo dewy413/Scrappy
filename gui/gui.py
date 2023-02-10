@@ -1,11 +1,18 @@
 import sys, time, threading
+
 from PyQt5.QtWidgets import *
 from PyQt5 import uic, QtCore  # This isn't causing an error
 from fetcher.foxnews import GrabFoxArticles, SearchArticles
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 
+from fetcher.data import Article
 
 
 ui = None
+
+
 
 
 class GUI(QMainWindow):
@@ -34,10 +41,20 @@ class GUI(QMainWindow):
 
 
     def refresh(self):
-        listOfArticles = GrabFoxArticles()
-        # CNNArticles = GrabCNNArticles()
-        for i in range(len(listOfArticles)):
-            self.searchResults.addItem("Website: FOX\n" + "\nTitle: " + listOfArticles[i].title + "\nLink: " + listOfArticles[i].link + "\n")
+        options = Options()
+        options.add_argument("headless")
+
+        driver = webdriver.Chrome(options=options)
+        driver.get("https://www.foxnews.com/")
+
+        articles = driver.find_elements(By.XPATH, "//article//h2//a")
+        del articles[0:10:1]
+
+        FoxNewsArticles = [Article(article.text, article.get_attribute('href')) for article in articles]
+        driver.close()
+
+        for i in range(len(FoxNewsArticles)):
+            self.searchResults.addItem("Website: FOX\n" + "\nTitle: " + FoxNewsArticles[i].title + "\nLink: " + FoxNewsArticles[i].link + "\n")
 
 def runProgram():
     app = QApplication(sys.argv)
