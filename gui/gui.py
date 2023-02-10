@@ -1,5 +1,17 @@
 import sys, time, threading
+import sys
+from time import sleep
+from PyQt5.QtCore import QObject, QThread, pyqtSignal
 
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import (
+    QApplication,
+    QLabel,
+    QMainWindow,
+    QPushButton,
+    QVBoxLayout,
+    QWidget, QListWidget,
+)
 from PyQt5.QtWidgets import *
 from PyQt5 import uic, QtCore  # This isn't causing an error
 from fetcher.foxnews import GrabFoxArticles, SearchArticles
@@ -13,7 +25,36 @@ from fetcher.data import Article
 ui = None
 
 
+class Worker(QObject):
+    finished = pyqtSignal()
+    progress = pyqtSignal(str)
 
+
+    def run(self):
+        print("Load Called")
+        options = Options()
+        options.add_argument("headless")
+        options.add_argument("disable-gpu")
+        print("Options Loaded")
+
+        print("Driver created")
+        driver = webdriver.Chrome(options=options)
+        print("Connecting to Fox News")
+        driver.get("https://www.foxnews.com/")
+        print("Connected to Fox News")
+
+        articles = driver.find_elements(By.XPATH, "//article//h2//a")
+        print("Connecting to Finding Elements")
+
+        del articles[0:10:1]
+        print("Connecting to deleting unneeded articles")
+
+        print("Loading Articles")
+
+        for article in articles:
+            self.progress.emit(article.text + " " + article.get_attribute('href'))
+        driver.close()
+        self.finished.emit()
 
 class GUI(QMainWindow):
     def __init__(self):
@@ -39,22 +80,29 @@ class GUI(QMainWindow):
     def clearArticles(self):
         self.searchResults.clear()
 
+    def addItem(self, element):
+        self.searchResults.addItem(element)
 
     def refresh(self):
-        options = Options()
-        options.add_argument("headless")
+        self.thread = QThread()
+        self.worker = Worker()
+        self.worker.moveToThread(self.thread)
+        self.thread.started.connect(self.worker.run)
+        self.worker.finished.connect(self.thread.quit)
+        self.worker.finished.connect(self.worker.deleteLater)
+        self.thread.finished.connect(self.thread.deleteLater)
+        self.worker.progress.connect(self.addItem)
 
-        driver = webdriver.Chrome(options=options)
-        driver.get("https://www.foxnews.com/")
+        self.thread.start()
 
-        articles = driver.find_elements(By.XPATH, "//article//h2//a")
-        del articles[0:10:1]
+        self.refreshButton.setEnabled(False)
+        self.thread.finished.connect(
+            lambda: self.refreshButton.setEnabled(True)
+        )
+        self.thread.finished.connect(
+            lambda: print("done")
+        )
 
-        FoxNewsArticles = [Article(article.text, article.get_attribute('href')) for article in articles]
-        driver.close()
-
-        for i in range(len(FoxNewsArticles)):
-            self.searchResults.addItem("Website: FOX\n" + "\nTitle: " + FoxNewsArticles[i].title + "\nLink: " + FoxNewsArticles[i].link + "\n")
 
 def runProgram():
     app = QApplication(sys.argv)

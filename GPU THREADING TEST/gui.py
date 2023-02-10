@@ -14,13 +14,13 @@ from PyQt5.QtWidgets import (
 
 class Worker(QObject):
     finished = pyqtSignal()
-    progress = pyqtSignal(int)
+    progress = pyqtSignal(str)
 
     def run(self):
         """Long-running task."""
         for i in range(5):
             sleep(1)
-            self.progress.emit(i + 1)
+            self.progress.emit("yes")
         self.finished.emit()
 class Window(QMainWindow):
     def __init__(self, parent=None):
