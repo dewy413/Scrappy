@@ -38,3 +38,4 @@ Might rewrite the code in C++ for speed. Not sure yet.
 * Wall Street Journal (Works, Center)
 * CNN (Works, Left) X 
 * New York Times (Works, Left)
+* NEWSMax (Right)

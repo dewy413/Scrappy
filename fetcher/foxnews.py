@@ -6,6 +6,7 @@ from fetcher.data import Article
 
 
 
+
 def GrabFoxArticles() -> list[Article]:
 
 
@@ -16,7 +17,12 @@ def GrabFoxArticles() -> list[Article]:
     driver.get("https://www.foxnews.com/")
     
     articles = driver.find_elements(By.XPATH, "//article//h2//a")
+    dupCheck = []
     del articles[0:10:1]
+
+    for i in range(len(articles)):
+        dupCheck.append(i.text)
+        print(i.text)
     
     FoxNewsArticles = [Article(article.text, article.get_attribute('href')) for article in articles]
     driver.close()

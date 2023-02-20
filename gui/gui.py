@@ -25,36 +25,7 @@ from fetcher.data import Article
 ui = None
 
 
-class Worker(QObject):
-    finished = pyqtSignal()
-    progress = pyqtSignal(str)
 
-
-    def run(self):
-        print("Load Called")
-        options = Options()
-        options.add_argument("headless")
-        options.add_argument("disable-gpu")
-        print("Options Loaded")
-
-        print("Driver created")
-        driver = webdriver.Chrome(options=options)
-        print("Connecting to Fox News")
-        driver.get("https://www.foxnews.com/")
-        print("Connected to Fox News")
-
-        articles = driver.find_elements(By.XPATH, "//article//h2//a")
-        print("Connecting to Finding Elements")
-
-        del articles[0:10:1]
-        print("Connecting to deleting unneeded articles")
-
-        print("Loading Articles")
-
-        for article in articles:
-            self.progress.emit(article.text + " " + article.get_attribute('href'))
-        driver.close()
-        self.finished.emit()
 
 class GUI(QMainWindow):
     def __init__(self):
@@ -84,24 +55,10 @@ class GUI(QMainWindow):
         self.searchResults.addItem(element)
 
     def refresh(self):
-        self.thread = QThread()
-        self.worker = Worker()
-        self.worker.moveToThread(self.thread)
-        self.thread.started.connect(self.worker.run)
-        self.worker.finished.connect(self.thread.quit)
-        self.worker.finished.connect(self.worker.deleteLater)
-        self.thread.finished.connect(self.thread.deleteLater)
-        self.worker.progress.connect(self.addItem)
-
-        self.thread.start()
-
-        self.refreshButton.setEnabled(False)
-        self.thread.finished.connect(
-            lambda: self.refreshButton.setEnabled(True)
-        )
-        self.thread.finished.connect(
-            lambda: print("done")
-        )
+        theseArticles = GrabFoxArticles()
+        for i in range(len(theseArticles)):
+            self.searchResults.addItem(
+                "\nTitle: " + theseArticles[i].title + "\nLink: " + theseArticles[i].link + "\n")
 
 
 def runProgram():
