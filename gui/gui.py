@@ -1,23 +1,7 @@
-import sys, time, threading
 import sys
-from time import sleep
-from PyQt5.QtCore import QObject, QThread, pyqtSignal
-
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
-    QApplication,
-    QLabel,
-    QMainWindow,
-    QPushButton,
-    QVBoxLayout,
-    QWidget, QListWidget,
-)
 from PyQt5.QtWidgets import *
 from PyQt5 import uic, QtCore  # This isn't causing an error
 from fetcher.foxnews import GrabFoxArticles, SearchArticles
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
 
 from fetcher.data import Article
 

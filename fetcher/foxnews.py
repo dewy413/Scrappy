@@ -29,5 +29,3 @@ def SearchArticles(articles: list[Article], keyword: str) -> list[Article]:
     
     return [article for article in articles if keyword.lower() in article.title.lower()]
 
-
-GrabFoxArticles()
