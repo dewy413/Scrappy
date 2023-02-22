@@ -19,3 +19,7 @@ def GrabCNNArticles() -> list[Article]:
     driver.close()
 
     return CNNArticles
+
+
+
+GrabCNNArticles()
