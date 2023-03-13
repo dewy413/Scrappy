@@ -18,6 +18,3 @@ def GrabCNNArticles() -> list[Article]:
 
     return CNNArticles
 
-
-
-GrabCNNArticles()

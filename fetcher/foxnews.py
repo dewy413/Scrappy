@@ -11,8 +11,6 @@ def GrabFoxArticles() -> list[Article]:
 
     options = Options()
     options.add_argument("headless")
-    options.add_argument('--disable-gpu')
-
 
     driver = webdriver.Chrome(options=options)
     driver.get("https://www.foxnews.com/")
@@ -33,5 +31,3 @@ def SearchArticles(articles: list[Article], keyword: str) -> list[Article]:
     return [article for article in articles if keyword.lower() in article.title.lower()]
 
 
-
-GrabFoxArticles()
