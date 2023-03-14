@@ -21,7 +21,7 @@ def GrabWSJArticles() -> list[Article]:
         except:
             pass
 
-    driver.close()
+    #driver.close()
 
 
     return Articles

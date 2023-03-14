@@ -7,10 +7,12 @@ from fetcher.cnn import GrabCNNArticles
 from fetcher.wallstreet import GrabWSJArticles
 from fetcher.data import Article
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 
 ui = None
 Articles = []
+
 
 class GUI(QMainWindow):
     def __init__(self):
@@ -36,14 +38,15 @@ class GUI(QMainWindow):
 
     def clearArticles(self):
         self.searchResults.clear()
+        Articles.clear()
 
     def addItem(self, element):
         self.searchResults.addItem(element)
-        Articles.clear()
-    #Idea for the refresh button to load new articles and the load button to actually put them on the screen.
+
+    # Idea for the refresh button to load new articles and the load button to actually put them on the screen.
     def refresh(self):
-        Articles = GrabAllArticles()
-        # Articles.extend(GrabWSJArticles())
+        # Articles.extend(GrabAllArticles())
+        Articles.extend(GrabWSJArticles())
         # Articles.extend(GrabFoxArticles())
         # Articles.extend(GrabCNNArticles())
         for i in range(len(Articles)):
@@ -51,8 +54,11 @@ class GUI(QMainWindow):
                 "\nTitle: " + Articles[i].title + "\nLink: " + Articles[i].link + "\n")
 
     def itemClicked(self):
-        print(Articles[self.searchResults.currentRow()].url)
 
+        chrome_options = Options()
+        chrome_options.add_experimental_option("detach", True)
+        driver = webdriver.Chrome(options=chrome_options)
+        driver.get(Articles[self.searchResults.currentRow()].link)
 
 def runProgram():
     app = QApplication(sys.argv)
