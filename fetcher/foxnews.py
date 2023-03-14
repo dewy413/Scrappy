@@ -16,6 +16,7 @@ def GrabFoxArticles() -> list[Article]:
     Articles = []
     text_grabbing = driver.find_elements(By.XPATH, "//article//h3")
 
+
     for i in range(len(text_grabbing)):
         try:
             Articles.append(Article(title=text_grabbing[i].text,
