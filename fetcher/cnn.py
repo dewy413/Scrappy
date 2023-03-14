@@ -17,7 +17,6 @@ def GrabCNNArticles() -> list[Article]:
 
     for i in range(len(text_grabbing)):
         try:
-            print(text_grabbing[i].text, " ", text_grabbing[i].find_element(By.XPATH, 'a').get_attribute('href'))
             Articles.append(Article(title=text_grabbing[i].text,
                                     link=text_grabbing[i].find_element(By.XPATH, 'a').get_attribute('href')))
         except:
@@ -26,6 +25,3 @@ def GrabCNNArticles() -> list[Article]:
     driver.close()
 
     return Articles
-
-
-GrabCNNArticles()
