@@ -8,19 +8,13 @@ from fetcher.data import Article
 
 
 def GrabFoxArticles() -> list[Article]:
-
     options = Options()
     options.add_argument("headless")
 
     driver = webdriver.Chrome(options=options)
     driver.get("https://www.foxnews.com/")
     Articles = []
-    text_grabbing = driver.find_elements(By.CLASS_NAME, "title")
-
-
-    del text_grabbing[7:9]
-    del text_grabbing[35:44]
-
+    text_grabbing = driver.find_elements(By.XPATH, "//article//h3")
 
     for i in range(len(text_grabbing)):
         try:
@@ -41,5 +35,4 @@ def SearchArticles(articles: list[Article], keyword: str) -> list[Article]:
     return [article for article in articles if keyword.lower() in article.title.lower()]
 
 
-GrabFoxArticles()
 
