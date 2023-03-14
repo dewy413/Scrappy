@@ -2,12 +2,15 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic, QtCore  # This isn't causing an error
 from fetcher.foxnews import GrabFoxArticles, SearchArticles
+from fetcher.allarticles import GrabAllArticles
 from fetcher.cnn import GrabCNNArticles
 from fetcher.wallstreet import GrabWSJArticles
 from fetcher.data import Article
+from selenium import webdriver
+
 
 ui = None
-
+Articles = []
 
 class GUI(QMainWindow):
     def __init__(self):
@@ -36,17 +39,18 @@ class GUI(QMainWindow):
 
     def addItem(self, element):
         self.searchResults.addItem(element)
-
+    #Idea for the refresh button to load new articles and the load button to actually put them on the screen.
     def refresh(self):
-        theseArticles = GrabWSJArticles()
-        # theseArticles.extend(GrabFoxArticles())
-        # theseArticles.extend(GrabCNNArticles())
-        for i in range(len(theseArticles)):
+        Articles = GrabAllArticles()
+        # Articles.extend(GrabWSJArticles())
+        # Articles.extend(GrabFoxArticles())
+        # Articles.extend(GrabCNNArticles())
+        for i in range(len(Articles)):
             self.searchResults.addItem(
-                "\nTitle: " + theseArticles[i].title + "\nLink: " + theseArticles[i].link + "\n")
+                "\nTitle: " + Articles[i].title + "\nLink: " + Articles[i].link + "\n")
 
     def itemClicked(self):
-        print("Double clicked", self.searchResults.currentRow())
+        print(Articles[self.searchResults.currentRow()].url)
 
 
 def runProgram():
