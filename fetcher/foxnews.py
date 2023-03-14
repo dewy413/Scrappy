@@ -14,15 +14,25 @@ def GrabFoxArticles() -> list[Article]:
 
     driver = webdriver.Chrome(options=options)
     driver.get("https://www.foxnews.com/")
+    Articles = []
+    text_grabbing = driver.find_elements(By.CLASS_NAME, "title")
 
-    articles = driver.find_elements(By.XPATH, "//article//h2//a")
-    del articles[0:10:1]
+
+    del text_grabbing[7:9]
+    del text_grabbing[35:44]
 
 
-    FoxNewsArticles = [Article(article.text, article.get_attribute('href')) for article in articles]
+    for i in range(len(text_grabbing)):
+        try:
+            Articles.append(Article(title=text_grabbing[i].text,
+                                    link=text_grabbing[i].find_element(By.XPATH, 'a').get_attribute('href')))
+        except:
+            pass
+
+
     driver.close()
 
-    return FoxNewsArticles
+    return Articles
 
 
 def SearchArticles(articles: list[Article], keyword: str) -> list[Article]:
@@ -30,4 +40,6 @@ def SearchArticles(articles: list[Article], keyword: str) -> list[Article]:
     
     return [article for article in articles if keyword.lower() in article.title.lower()]
 
+
+GrabFoxArticles()
 
