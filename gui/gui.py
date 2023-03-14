@@ -39,6 +39,7 @@ class GUI(QMainWindow):
 
     def addItem(self, element):
         self.searchResults.addItem(element)
+        Articles.clear()
     #Idea for the refresh button to load new articles and the load button to actually put them on the screen.
     def refresh(self):
         Articles = GrabAllArticles()
