@@ -12,6 +12,7 @@ from selenium.webdriver.chrome.options import Options
 
 ui = None
 Articles = []
+Requested_Articles = []
 
 
 class GUI(QMainWindow):
@@ -23,6 +24,7 @@ class GUI(QMainWindow):
         self.refreshButton.clicked.connect(lambda: self.refresh())  # Sets to when the button is press
         self.clearButton.clicked.connect(lambda: self.clearArticles())
         self.searchResults.itemDoubleClicked.connect(lambda: self.itemClicked())
+        Articles.extend(GrabAllArticles())
 
     def loadUI(self):
         self.ui = uic.loadUi("app.ui", self)
@@ -30,23 +32,21 @@ class GUI(QMainWindow):
 
     def searchKeyword(self):
         listOfArticles = GrabFoxArticles()
-        desiredArticles = SearchArticles(listOfArticles, str(self.searchEdit.text()))
+        Requested_Articles = SearchArticles(listOfArticles, str(self.searchEdit.text()))
 
-        for i in range(len(desiredArticles)):
+        for i in range(len(Requested_Articles)):
             self.searchResults.addItem(
-                "\nTitle: " + desiredArticles[i].title + "\nLink: " + desiredArticles[i].link + "\n")
-
+                "\nTitle: " + Requested_Articles[i].title + "\nLink: " + Requested_Articles[i].link + "\n")
+        Requested_Articles.clear()
     def clearArticles(self):
         self.searchResults.clear()
-        Articles.clear()
 
     def addItem(self, element):
         self.searchResults.addItem(element)
 
     # Idea for the refresh button to load new articles and the load button to actually put them on the screen.
     def refresh(self):
-        # Articles.extend(GrabAllArticles())
-        Articles.extend(GrabWSJArticles())
+        #Articles.extend(GrabWSJArticles())
         # Articles.extend(GrabFoxArticles())
         # Articles.extend(GrabCNNArticles())
         for i in range(len(Articles)):
