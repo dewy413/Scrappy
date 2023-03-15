@@ -24,15 +24,15 @@ class GUI(QMainWindow):
         self.refreshButton.clicked.connect(lambda: self.refresh())  # Sets to when the button is press
         self.clearButton.clicked.connect(lambda: self.clearArticles())
         self.searchResults.itemDoubleClicked.connect(lambda: self.itemClicked())
-        Articles.extend(GrabAllArticles())
+        Articles.extend(GrabWSJArticles())
 
     def loadUI(self):
         self.ui = uic.loadUi("app.ui", self)
         self.show()
 
     def searchKeyword(self):
-        listOfArticles = GrabFoxArticles()
-        Requested_Articles = SearchArticles(listOfArticles, str(self.searchEdit.text()))
+        self.searchResults.clear()
+        Requested_Articles = SearchArticles(Articles, str(self.searchEdit.text()))
 
         for i in range(len(Requested_Articles)):
             self.searchResults.addItem(
@@ -51,14 +51,15 @@ class GUI(QMainWindow):
         # Articles.extend(GrabCNNArticles())
         for i in range(len(Articles)):
             self.searchResults.addItem(
-                "\nTitle: " + Articles[i].title + "\nLink: " + Articles[i].link + "\n")
+                Articles[i].title + "\n" + Articles[i].link)
 
     def itemClicked(self):
 
         chrome_options = Options()
         chrome_options.add_experimental_option("detach", True)
         driver = webdriver.Chrome(options=chrome_options)
-        driver.get(Articles[self.searchResults.currentRow()].link)
+        link = self.searchResults.selectedItems()[0].text().split("\n")[1]
+        driver.get(link)
 
 def runProgram():
     app = QApplication(sys.argv)
