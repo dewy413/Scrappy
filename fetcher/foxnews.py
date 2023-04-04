@@ -5,8 +5,6 @@ from selenium.webdriver.common.by import By
 from fetcher.data import Article
 
 
-
-
 def GrabFoxArticles() -> list[Article]:
     options = Options()
     options.add_argument("headless")
@@ -16,7 +14,6 @@ def GrabFoxArticles() -> list[Article]:
     Articles = []
     text_grabbing = driver.find_elements(By.XPATH, "//article//h3")
 
-
     for i in range(len(text_grabbing)):
         try:
             Articles.append(Article(title=text_grabbing[i].text,
@@ -24,15 +21,18 @@ def GrabFoxArticles() -> list[Article]:
         except:
             pass
 
-
     driver.close()
 
     return Articles
 
 
-def SearchArticles(articles: list[Article], keyword: str) -> list[Article]:
+def SearchArticles(articles, keyword):
+    wanted_articles = []
+    for i in range(len(articles)):
+        if keyword.lower() in articles[i].title.lower():
+            wanted_articles.append(articles[i])
 
-    
-    return [article for article in articles if keyword.lower() in article.title.lower()]
+
+    return wanted_articles
 
 
