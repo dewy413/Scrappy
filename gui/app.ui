@@ -25,6 +25,13 @@
   <property name="windowTitle">
    <string>Scrappy</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../../../Downloads/scrappy logo test (1).png</normaloff>../../../../Downloads/scrappy logo test (1).png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(207, 222, 231);</string>
+  </property>
   <property name="tabShape">
    <enum>QTabWidget::Rounded</enum>
   </property>
@@ -41,6 +48,12 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">font: 8pt &quot;Courier&quot;;
+color: #0A369D;
+border-style: solid;
+border-width: 1px;</string>
+    </property>
     <property name="text">
      <string>Search</string>
     </property>
@@ -53,6 +66,12 @@
       <width>161</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 8pt &quot;Courier&quot;;
+color: #0A369D;
+border-style: solid;
+border-width: 1px;</string>
     </property>
     <property name="text">
      <string>Keyword</string>
@@ -67,6 +86,12 @@
       <height>581</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">font: 8pt &quot;Courier&quot;;
+color: #0A369D;
+border-style: solid;
+border-width: 1px;</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="refreshButton">
     <property name="geometry">
@@ -76,6 +101,12 @@
       <width>75</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 8pt &quot;Courier&quot;;
+color: #0A369D;
+border-style: solid;
+border-width: 1px;</string>
     </property>
     <property name="text">
      <string>Load</string>
@@ -89,6 +120,12 @@
       <width>75</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 8pt &quot;Courier&quot;;
+color: #0A369D;
+border-style: solid;
+border-width: 1px;</string>
     </property>
     <property name="text">
      <string>Clear</string>

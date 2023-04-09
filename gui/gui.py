@@ -9,7 +9,6 @@ from fetcher.data import Article
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-
 ui = None
 Articles = []
 Requested_Articles = []
@@ -24,7 +23,7 @@ class GUI(QMainWindow):
         self.refreshButton.clicked.connect(lambda: self.refresh())  # Sets to when the button is press
         self.clearButton.clicked.connect(lambda: self.clearArticles())
         self.searchResults.itemDoubleClicked.connect(lambda: self.itemClicked())
-        #Articles.extend(GrabWSJArticles())
+        # Articles.extend(GrabWSJArticles())
         Articles.extend(GrabAllArticles())
 
     def loadUI(self):
@@ -34,11 +33,16 @@ class GUI(QMainWindow):
     def searchKeyword(self):
         self.searchResults.clear()
         Requested_Articles = SearchArticles(Articles, str(self.searchEdit.text()))
+        No_Duplicate_Articles = []
+        for i in Requested_Articles:
+            if i not in No_Duplicate_Articles:
+                No_Duplicate_Articles.append(i)
 
-        for i in range(len(Requested_Articles)):
+        for i in range(len(No_Duplicate_Articles)):
             self.searchResults.addItem(
-                "\n" + Requested_Articles[i].title + "\n" + Requested_Articles[i].link)
-        Requested_Articles.clear()
+                "\n" + No_Duplicate_Articles[i].title + "\n" + No_Duplicate_Articles[i].link)
+        No_Duplicate_Articles.clear()
+
     def clearArticles(self):
         self.searchResults.clear()
 
@@ -47,7 +51,7 @@ class GUI(QMainWindow):
 
     # Idea for the refresh button to load new articles and the load button to actually put them on the screen.
     def refresh(self):
-        #Articles.extend(GrabWSJArticles())
+        # Articles.extend(GrabWSJArticles())
         # Articles.extend(GrabFoxArticles())
         # Articles.extend(GrabCNNArticles())
         for i in range(len(Articles)):
@@ -61,6 +65,7 @@ class GUI(QMainWindow):
         driver = webdriver.Chrome(options=chrome_options)
         link = self.searchResults.selectedItems()[0].text().split("\n")[2]
         driver.get(link)
+
 
 def runProgram():
     app = QApplication(sys.argv)
