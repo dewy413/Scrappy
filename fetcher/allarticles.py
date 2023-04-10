@@ -10,12 +10,9 @@ def GrabAllArticles() -> list[Article]:
     Articles = []
     print("Starting Grabbing Articles")
 
-    CNNArticles = threading.Thread(target=Articles.extend(checkWebsite("https://www.cnn.com/")))
-    CNNArticles.start()
-    FoxArticles = threading.Thread(target=Articles.extend(checkWebsite("https://www.foxnews.com/")))
-    FoxArticles.start()
-    WSJArticles = threading.Thread(target=Articles.extend(checkWebsite("https://www.wsj.com/")))
-    WSJArticles.start()
+    Articles.extend(checkWebsite("https://www.cnn.com/"))
+    Articles.extend(checkWebsite("https://www.foxnews.com/"))
+    Articles.extend(checkWebsite("https://www.wsj.com/"))
 
     return Articles
 
