@@ -1,24 +1,31 @@
+import threading
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-
 from fetcher.data import Article
 
 
 def GrabAllArticles() -> list[Article]:
 
-    options = Options()
-    options.add_argument('headless')
-    driver = webdriver.Chrome(options=options)
-
-
-
     Articles = []
-    website_links = ['https://www.wsj.com/', 'https://www.cnn.com/', 'https://www.foxnews.com/']
+    print("Starting Grabbing Articles")
 
-    for j in range(len(website_links)):
-        #print(website_links[j], end="\n")
-        driver.get(website_links[j])
+    CNNArticles = threading.Thread(target=Articles.extend(checkWebsite("https://www.cnn.com/")))
+    CNNArticles.start()
+    FoxArticles = threading.Thread(target=Articles.extend(checkWebsite("https://www.foxnews.com/")))
+    FoxArticles.start()
+    WSJArticles = threading.Thread(target=Articles.extend(checkWebsite("https://www.wsj.com/")))
+    WSJArticles.start()
+
+    return Articles
+
+def checkWebsite(page) -> list[Article]:
+        options = Options()
+        options.add_argument('headless')
+        driver = webdriver.Chrome(options=options)
+        driver.get(page)
+        Articles = []
+        print(page, end="\n")
         text_grabbing = driver.find_elements(By.XPATH, "//article//h3")
         for i in range(len(text_grabbing)):
             #print(i, end="\n")
@@ -27,9 +34,5 @@ def GrabAllArticles() -> list[Article]:
                                         link=text_grabbing[i].find_element(By.XPATH, 'a').get_attribute('href')))
             except:
                 pass
-
-
-
-    driver.close()
-
-    return Articles
+        driver.close()
+        return Articles
