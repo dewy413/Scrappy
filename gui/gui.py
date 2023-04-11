@@ -1,4 +1,5 @@
 import sys
+import time
 
 from PyQt5.QtWidgets import *
 from PyQt5 import uic  # This isn't causing an error
@@ -12,11 +13,14 @@ from selenium.webdriver.chrome.options import Options
 ui = None
 Articles = []
 Requested_Articles = []
+options = Options()
+permadriver = webdriver.Chrome(options=options)
 
 class Worker(QObject):
     finished = pyqtSignal()
     progress = pyqtSignal(int)
-    def run(self):
+    link = ""
+    def refresh(self):
 
         options = Options()
         options.add_argument('headless')
@@ -25,7 +29,7 @@ class Worker(QObject):
         website_links = ['https://www.wsj.com/', 'https://www.cnn.com/', 'https://www.foxnews.com/']
         for j in range(len(website_links)):
             driver.get(website_links[j])
-            print(website_links[j], end="\n")
+            #print(website_links[j], end="\n")
             text_grabbing = driver.find_elements(By.XPATH, "//article//h3")
 
             for i in range(len(text_grabbing)):
@@ -40,6 +44,11 @@ class Worker(QObject):
         self.finished.emit()
 
 
+    def open(self):
+        permadriver.switch_to.new_window()
+        permadriver.get(self.link)
+        self.finished.emit()
+
 
 
 class GUI(QMainWindow):
@@ -53,6 +62,8 @@ class GUI(QMainWindow):
         self.clearButton.clicked.connect(lambda: self.searchResults.clear())  # Clears all currently displayed article
         self.searchResults.itemDoubleClicked.connect(lambda: self.itemClicked())  # Opens link to the webpage
         self.progressBar.setHidden(True)
+        self.refresh()
+
 
     def loadUI(self):
         self.ui = uic.loadUi("app.ui", self)
@@ -91,10 +102,8 @@ class GUI(QMainWindow):
         Articles.clear()
         self.thread = QThread()
         self.worker = Worker()
-
         self.worker.moveToThread(self.thread)
-
-        self.thread.started.connect(self.worker.run)
+        self.thread.started.connect(self.worker.refresh)
         self.worker.finished.connect(self.thread.quit)
         self.worker.finished.connect(self.worker.deleteLater)
         self.thread.finished.connect(self.thread.deleteLater)
@@ -109,12 +118,15 @@ class GUI(QMainWindow):
         self.progressBar.setValue(val)
 
     def itemClicked(self):
-
-        chrome_options = Options()
-        chrome_options.add_experimental_option("detach", True)
-        driver = webdriver.Chrome(options=chrome_options)
-        link = self.searchResults.selectedItems()[0].text().split("\n")[2]
-        driver.get(link)
+        self.thread = QThread()
+        self.worker = Worker()
+        self.worker.link = self.searchResults.selectedItems()[0].text().split("\n")[2]
+        self.worker.moveToThread(self.thread)
+        self.thread.started.connect(self.worker.open)
+        self.worker.finished.connect(self.thread.quit)
+        self.worker.finished.connect(self.worker.deleteLater)
+        self.thread.finished.connect(self.thread.deleteLater)
+        self.thread.start()
 
 
 def runProgram():
@@ -125,3 +137,4 @@ def runProgram():
 
 
 runProgram()
+permadriver.close()
