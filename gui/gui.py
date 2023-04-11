@@ -6,7 +6,7 @@ from PyQt5 import uic  # This isn't causing an error
 from selenium.webdriver.common.by import By
 from PyQt5.QtCore import QObject, QThread, pyqtSignal
 from fetcher.data import Article
-from fetcher.foxnews import SearchArticles
+from fetcher.allarticles import SearchArticles
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 

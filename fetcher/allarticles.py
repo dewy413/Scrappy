@@ -33,3 +33,13 @@ def checkWebsite(page) -> list[Article]:
                 pass
         driver.close()
         return Articles
+
+
+def SearchArticles(articles, keyword):
+    wanted_articles = []
+    for i in range(len(articles)):
+        if keyword.lower() in articles[i].title.lower():
+            wanted_articles.append(articles[i])
+
+
+    return wanted_articles
