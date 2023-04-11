@@ -9,12 +9,16 @@ from fetcher.data import Article
 from fetcher.allarticles import SearchArticles
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
 
 ui = None
 Articles = []
 Requested_Articles = []
 options = Options()
-permadriver = webdriver.Chrome(options=options)
+caps = DesiredCapabilities().CHROME
+caps["pageLoadStrategy"] = "eager"  #  Waits for page to be interactive
+permadriver = webdriver.Chrome(desired_capabilities=caps, options=options)
 
 class Worker(QObject):
     finished = pyqtSignal()
