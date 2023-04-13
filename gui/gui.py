@@ -17,7 +17,7 @@ Articles = []
 Requested_Articles = []
 options = Options()
 caps = DesiredCapabilities().CHROME
-caps["pageLoadStrategy"] = "none";
+caps["pageLoadStrategy"] = "none"
 permadriver = webdriver.Chrome(desired_capabilities=caps, options=options)
 
 class Worker(QObject):
