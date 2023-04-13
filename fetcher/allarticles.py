@@ -1,4 +1,3 @@
-import threading
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
@@ -25,7 +24,6 @@ def checkWebsite(page) -> list[Article]:
         print(page, end="\n")
         text_grabbing = driver.find_elements(By.XPATH, "//article//h3")
         for i in range(len(text_grabbing)):
-            #print(i, end="\n")
             try:
                 Articles.append(Article(title=text_grabbing[i].text,
                                         link=text_grabbing[i].find_element(By.XPATH, 'a').get_attribute('href')))

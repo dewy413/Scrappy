@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../../Downloads/scrappy logo test (1).png</normaloff>../../../../Downloads/scrappy logo test (1).png</iconset>
+    <normaloff>../resources/ScrappyLogo.png</normaloff>../resources/ScrappyLogo.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(207, 222, 231);</string>
